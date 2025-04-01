@@ -1,0 +1,24 @@
+services:
+  mysql:
+    image: mysql
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 5s
+      retries: 5
+      interval: 10s
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+
+volumes:
+  mysql_data:
