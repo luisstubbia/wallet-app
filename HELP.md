@@ -44,18 +44,18 @@ Design rules:
 - Every time a new movement is created, the service enqueue an event into an inner-queue. Then other process pull that event and update the projection.
 
 #### Database model
-![plot](https://github.com/luisstubbia/wallet-app/images/db-model.png)
+![plot](https://github.com/luisstubbia/wallet-app/blob/master/images/db-model.png)
 
 
 #### Balance modeling
-![plot](https://github.com/luisstubbia/wallet-app/images/main-entities.png)
+![plot](https://github.com/luisstubbia/wallet-app/blob/master/images/main-entities.png)
 
 ### Swagger (http://localhost:8080/swagger-ui/index.html#/)
 
 #### Login
-![plot](https://github.com/luisstubbia/wallet-app/images/login.png)
+![plot](https://github.com/luisstubbia/wallet-app/blob/master/images/login.png)
 
-![plot](https://github.com/luisstubbia/wallet-app/images/authenticate.png)
+![plot](https://github.com/luisstubbia/wallet-app/blob/master/images/authenticate.png)
 #### Get Account
 ```
 curl -X 'GET' \
