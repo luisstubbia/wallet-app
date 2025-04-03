@@ -44,17 +44,18 @@ Design rules:
 - Every time a new movement is created, the service enqueue an event into an inner-queue. Then other process pull that event and update the projection.
 
 #### Database model
-![plot](../wallet-app/images/db-model.png)
+![plot](https://github.com/luisstubbia/wallet-app/images/db-model.png)
+
 
 #### Balance modeling
-![plot](../wallet-app/images/main-entities.png)
+![plot](https://github.com/luisstubbia/wallet-app/images/main-entities.png)
 
 ### Swagger (http://localhost:8080/swagger-ui/index.html#/)
 
 #### Login
-![plot](../wallet-app/images/login.png)
+![plot](https://github.com/luisstubbia/wallet-app/images/login.png)
 
-![plot](../wallet-app/images/authenticate.png)
+![plot](https://github.com/luisstubbia/wallet-app/images/authenticate.png)
 #### Get Account
 ```
 curl -X 'GET' \
@@ -133,6 +134,28 @@ Response
   }
 ]
 ```
+
+### Trade-offs
+
+This implementation involves some trade-offs due to time constraints.
+- This a monolithic. Ideally this solution must be split into at least 5 components:
+  - Transfer API (Handle all rules related to movement of money between wallet accounts).
+  - Deposit API (Handle all rules for external deposits). Maybe an IPN from different banks or any other strategy in order to identify the main source for traceability.
+  - Withdraw API (Handle all rules for withdrawals). Support features such us scheduling withdrawals or manual ones.
+  - Security layer (Move all security aspects to one or more components for public interactions)
+  - Balance core API (Handle all rules for user's balances). Implement features like: 
+    - Avoid negative balances
+    - Check available balance for each debit operation
+    - Support reserve of amounts
+    - Improve calculation of snapshots and projections, using async processes with queues like kafka, sns/sqs.
+      - Uses event-bridge scheduler as cron jobs for async tasks.
+      - Add snapshots per operation type.
+      - Migrate projections to another engine, like dynamodb.
+
+Technical improvements:
+  - Logging (stdout + rsyslog) or send this data through Otel. 
+  - Observability with open telemetry + monitoring tools (Prometheus + Grafana)
+    
 ### Reference Documentation
 
 For further reference, please consider the following sections:
